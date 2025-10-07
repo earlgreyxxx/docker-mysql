@@ -1,0 +1,35 @@
+###################################################################################
+# MySQL and phpMyAdmin
+###################################################################################
+services:
+  mysqldb:
+    image: mysql:latest
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: Ddksol0001
+      MYSQL_DATABASE: ddksystem
+      MYSQL_USER: web
+      MYSQL_PASSWORD: H8885p
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./volumes/var/data:/var/lib/mysql
+    - ./volumes/etc/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+    - 3306:3306
+
+###################################################################################
+# 
+###################################################################################
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - TZ=Asia/Tokyo
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysqldb
+      - PMA_USER=root
+      - PMA_PASSWORD=Ddksol0001
+      - UPLOAD_LIMIT=64M
+    ports:
+    - 28888:80
