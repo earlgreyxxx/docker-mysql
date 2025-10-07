@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ "$1" = "phpmyadmin" -o "$1" = "mysqldb" ]; then
+	docker exec -it $1 /bin/bash
+else
+	echo 'no available connection point(phpmyadmin|mysqldb) specified... sorry.'
+fi
