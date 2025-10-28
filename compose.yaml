@@ -13,10 +13,12 @@ services:
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-    - ./volumes/var/data:/var/lib/mysql
-    - ./volumes/etc/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./volumes/var/data:/var/lib/mysql
+      - ./volumes/etc/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
-    - 3306:3306
+      - ${MYSQL_EXTERNAL_PORT:-3306}:3306
+    networks:
+      - shared-network
 
 ###################################################################################
 # 
@@ -31,5 +33,9 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=Ddksol0001
       - UPLOAD_LIMIT=64M
-    ports:
-    - 28888:80
+    networks:
+      - shared-network 
+
+networks:
+  shared-network:
+    external: true
